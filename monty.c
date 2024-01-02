@@ -40,21 +40,14 @@ char **tokenize(char *line, int line_number)
  */
 int main(int argc, char *argv[])
 {
-	int i = 0, line_number = 1;
-	int file, bytes_read, number;
+	int i, line_number = 1, file, bytes_read, number;
 	char **tab, line[1024];
 	const char *file_from;
-	stack_t **stack;
-	instruction_t instruction[] = {
-		{"push", push_function},
-		{NULL, NULL}
-	};
+	stack_t **stack = NULL;
+	instruction_t instruction[] = {{"push", push_function}, {NULL, NULL}};
 
 	if (argc != 2)
-	{
-		fprintf(stderr, "USAGE: monty file\n");
-		exit(EXIT_FAILURE);
-	}
+		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
 	file_from = argv[1];
 	file = open(file_from, O_RDONLY);
 	if (file == -1)
@@ -64,18 +57,22 @@ int main(int argc, char *argv[])
 	}
 	while ((bytes_read = read(file, line, 1024)) > 0)
 	{
+		i = 0;
 		tab = tokenize(line, line_number);
 		while (instruction[i].opcode != NULL)
 		{
 			if (strcmp(instruction[i].opcode, "push") == 0)
-		{
-			number = convert_if_int(tab[1], line_number);
-			instruction[i].f(stack, number);
-		}
-		else
-		{
-			fprintf(stderr, "L%d: unknown instruction <opcode>", line_number);
-			exit(EXIT_FAILURE);
+			{
+				number = convert_if_int(tab[1], line_number);
+				instruction[i].f(stack, number);
+				break;
+			}
+			else
+			{
+				fprintf(stderr, "L%d: unknown instruction <opcode>", line_number);
+				exit(EXIT_FAILURE);
+			}
+			i++;
 		}
 		line_number++;
 	}
@@ -84,4 +81,5 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't read from file %s\n", file_from);
 		exit(EXIT_FAILURE);
 	}
+	return (0);
 }
