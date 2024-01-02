@@ -4,13 +4,15 @@
  * convert_if_int - convert char to int
  * @arg2: string to convert to int
  * @line_number: line number
- * 
+ *
  * Return: number
  */
 
-int convert_if_int(char *arg2, line_number)
+int convert_if_int(char *arg2, int line_number)
 {
+	int number = 0;
 	int i = 0;
+
 	while (arg2[i] != '\0')
 	{
 		if (isdigit(arg2[i]) == 0)
@@ -26,32 +28,20 @@ int convert_if_int(char *arg2, line_number)
 
 /**
  * push_function - add elements to stack
- * @number: number to add
- */
-void push_function(number) 
-{
-	instruction_t push;
-	stack_t stack_push;
-	push.opcode = "push";
-	push.handle_opcode(stack_push, number);
-}
-
-/**
- * handle_opcode - create a doubly-linked list of elements
  * @stack: stack to fill
- * @line_number: line number
+ * @number: line number
  */
 
-void *handle_opcode(stack_t **stack, unsigned int line_number)
+void push_function(stack_t **stack, unsigned int number)
 {
-	stack_t new_node = malloc(sizeof(stack_t));
+	stack_t *new_node = malloc(sizeof(stack_t));
 
 	if (new_node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	new_node->n = line_number;
+	new_node->n = number;
 	new_node->next = *stack;
 	new_node->prev = NULL;
 
