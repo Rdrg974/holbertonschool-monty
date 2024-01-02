@@ -59,17 +59,20 @@ int main(int argc, char *argv[])
 	{
 		i = 0;
 		tab = tokenize(line, line_number);
+		printf("%s\n", tab[0]);
+		printf("%s\n", tab[1]);
 		while (instruction[i].opcode != NULL)
 		{
-			if (strcmp(instruction[i].opcode, "push") == 0)
+			if (strcmp(instruction[i].opcode, tab[0]) == 0)
 			{
 				number = convert_if_int(tab[1], line_number);
+				printf("%d\n", number);
 				instruction[i].f(stack, number);
 				break;
 			}
 			else
 			{
-				fprintf(stderr, "L%d: unknown instruction <opcode>", line_number);
+				fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
 				exit(EXIT_FAILURE);
 			}
 			i++;
