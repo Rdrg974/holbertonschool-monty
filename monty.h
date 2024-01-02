@@ -39,8 +39,7 @@ typedef struct instruction_s
 } instruction_t;
 
 char **tokenize(char *line, int line_number);
-int convert_if_int(char *second_argument, int line_number);
-void push_function(int number);
-void *handle_opcode(stack_t **stack, unsigned int line_number);
+int convert_if_int(char *second_argument, int number);
+void push_function(stack_t **stack, int number);
 
 #endif
