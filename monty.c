@@ -22,12 +22,12 @@ char **tokenize(char *line, int line_number)
 	{
 		if (i > 1)
 		{
-			fprintf(stderr, "L%d: unknown instruction <opcode>", line_number);
+			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
 			exit(EXIT_FAILURE);
 		}
 		tab[i] = token;
-		token = strtok(NULL, " \t");
 		i++;
+		token = strtok(NULL, " \t");
 	}
 	return (tab);
 }
@@ -40,7 +40,8 @@ char **tokenize(char *line, int line_number)
  */
 int main(int argc, char *argv[])
 {
-	int i, line_number = 1, file, bytes_read, number;
+	FILE *file;
+	int i, line_number = 1, number;
 	char **tab, line[1024];
 	const char *file_from;
 	stack_t **stack = NULL;
@@ -49,18 +50,16 @@ int main(int argc, char *argv[])
 	if (argc != 2)
 		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
 	file_from = argv[1];
-	file = open(file_from, O_RDONLY);
-	if (file == -1)
+	file = fopen(file_from, "r");
+	if (file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", file_from);
 		exit(EXIT_FAILURE);
 	}
-	while ((bytes_read = read(file, line, 1024)) > 0)
+	while (fgets(line, sizeof(line), file) != NULL)
 	{
 		i = 0;
 		tab = tokenize(line, line_number);
-		printf("%s\n", tab[0]);
-		printf("%s\n", tab[1]);
 		while (instruction[i].opcode != NULL)
 		{
 			if (strcmp(instruction[i].opcode, tab[0]) == 0)
@@ -79,10 +78,6 @@ int main(int argc, char *argv[])
 		}
 		line_number++;
 	}
-	if (bytes_read == -1)
-	{
-		fprintf(stderr, "Error: Can't read from file %s\n", file_from);
-		exit(EXIT_FAILURE);
-	}
+	fclose(file);
 	return (0);
 }
