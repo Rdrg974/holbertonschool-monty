@@ -40,10 +40,15 @@ char **tokenize(char *line, int line_number)
  */
 int main(int argc, char *argv[])
 {
-	int line_number = 1;
+	int i = 0, line_number = 1;
 	int file, bytes_read, number;
 	char **tab, line[1024];
 	const char *file_from;
+	stack_t **stack;
+	instruction_t instruction[] = {
+		{"push", push_function},
+		{NULL, NULL}
+	};
 
 	if (argc != 2)
 	{
@@ -60,10 +65,12 @@ int main(int argc, char *argv[])
 	while ((bytes_read = read(file, line, 1024)) > 0)
 	{
 		tab = tokenize(line, line_number);
-		if (strcmp(tab[0], "push") == 0)
+		while (instruction[i].opcode != NULL)
+		{
+			if (strcmp(instruction[i].opcode, "push") == 0)
 		{
 			number = convert_if_int(tab[1], line_number);
-			push_function(number);
+			instruction[i].f(stack, number);
 		}
 		else
 		{
