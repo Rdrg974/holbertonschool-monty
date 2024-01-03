@@ -29,6 +29,7 @@ char **tokenize(char *line, int line_number)
 		i++;
 		token = strtok(NULL, " \t\n");
 	}
+	free(token);
 	return (tab);
 }
 
@@ -41,8 +42,7 @@ char **tokenize(char *line, int line_number)
 int main(int argc, char *argv[])
 {
 	FILE *file;
-	int i, line_number = 1, number;
-	char **tab, line[1024];
+	int line_number = 1;
 	const char *file_from;
 	stack_t *stack = NULL;
 	instruction_t instruction[] = {{"push", push_function},
@@ -57,26 +57,8 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't open file %s\n", file_from);
 		exit(EXIT_FAILURE);
 	}
-	while (fgets(line, sizeof(line), file) != NULL)
-	{
-		tab = tokenize(line, line_number);
-		for (i = 0; instruction[i].opcode != NULL; i++)
-		{
-			if (strcmp(instruction[i].opcode, tab[0]) == 0)
-			{
-				if (tab[1] != NULL)
-					number = convert_if_int(tab[1], line_number);
-				instruction[i].f(&stack, number);
-				break;
-			}
-		}
-		if (instruction[i].opcode == NULL)
-		{
-			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
-			exit(EXIT_FAILURE);
-		}
-		line_number++;
-	}
+	get_opcode(&stack, instruction, line_number);
+	free_stack(&stack);
 	fclose(file);
 	return (0);
 }
