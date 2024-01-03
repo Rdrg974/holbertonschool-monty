@@ -50,6 +50,11 @@ void push_function(stack_t **stack, unsigned int number)
 	(*stack) = new_node;
 }
 
+/**
+ * free_stack - free the stack
+ * @stack: stack containting elements to free
+ */
+
 void free_stack(stack_t **stack)
 {
 	stack_t *temp;
