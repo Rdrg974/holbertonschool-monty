@@ -48,7 +48,6 @@ void push_function(stack_t **stack, unsigned int number)
 	if ((*stack) != NULL)
 		(*stack)->prev = new_node;
 	(*stack) = new_node;
-	printf("%d\n", (*stack)->n);
 }
 
 /*void free_stack(stack_t **stack)
