@@ -11,6 +11,7 @@ void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 {
 	int i = 0, number = 0, line_number = 1;
 	char **tab, line[1024];
+	*stack = NULL;
 
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
