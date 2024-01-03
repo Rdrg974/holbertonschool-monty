@@ -34,7 +34,7 @@ int convert_if_int(char *arg2, int line_number)
 
 void push_function(stack_t **stack, unsigned int number)
 {
-	stack_t *new_node = malloc(sizeof(stack_t));
+	stack_t *new_node = malloc(sizeof(stack_t) * 1);
 
 	if (new_node == NULL)
 	{
@@ -45,7 +45,20 @@ void push_function(stack_t **stack, unsigned int number)
 	new_node->next = *stack;
 	new_node->prev = NULL;
 
-	if (*stack != NULL)
+	if ((*stack) != NULL)
 		(*stack)->prev = new_node;
-	*stack = new_node;
+	(*stack) = new_node;
+	printf("%d\n", (*stack)->n);
 }
+
+/*void free_stack(stack_t **stack)
+{
+	stack_t **tmp;
+
+	while ((*stack) != NULL)
+	{
+		(*tmp) = (*stack);
+		(*stack) = (*stack)->next;
+		free(tmp);
+	}
+}*/
