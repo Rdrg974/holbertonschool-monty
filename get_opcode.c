@@ -2,41 +2,38 @@
 
 /**
  * tokenize - function who tokenize a string
- * @line: a string of character
+ * @stack: stack to fill
+ * @instructions: opcode and its function
  * @line_number: a number of the line
- * Return: an array of string of character
+ * @line: a string of character
+ * Return: stack
  */
 
-char **tokenize(char *line, int line_number)
+stack_t *tokenize(stack_t *stack, instruction_t instructions[],
+		int line_number, char *line)
 {
-	int i = 0;
-	char *token;
-	char **tab = malloc(sizeof(char *) * 2);
+	int i = 0, number = 0;
+	char *token, *tmp;
 
-	if (tab == NULL)
+	tmp = strdup(line);
+	token = strtok(tmp, " \t\n");
+	while (token != NULL && instructions[i].opcode != NULL)
 	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	token = strtok(line, " \t\n");
-	while (token != NULL)
-	{
-		if (i >= 2)
+		if (strcmp(instructions[i].opcode, token) == 0)
 		{
-			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
-			exit(EXIT_FAILURE);
+			if (strcmp(token, "push") == 0)
+			{
+				token = strtok(NULL, " \t\n");
+				number = convert_if_int(token, line_number);
+			}
+			instructions[i].f(&stack, number);
+			free(tmp);
+			return (stack);
 		}
-		tab[i] = malloc(strlen(token) + 1);
-		if (tab[i] == NULL)
-		{
-			fprintf(stderr, "Error: malloc failed\n");
-			exit(EXIT_FAILURE);
-		}
-		strcpy(tab[i], token);
 		i++;
-		token = strtok(NULL, " \t\n");
 	}
-	return (tab);
+	free(tmp);
+	return (NULL);
 }
 
 /**
@@ -48,39 +45,18 @@ char **tokenize(char *line, int line_number)
 
 void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 {
-	int i = 0, number = 0, line_number = 1;
-	char **tab = NULL, line[1024];
+	int line_number = 1;
+	char line[1024];
 
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
-		tab = tokenize(line, line_number);
-		for (i = 0; instructions[i].opcode != NULL; i++)
-		{
-			if (strcmp(instructions[i].opcode, tab[0]) == 0)
-			{
-				if (tab[1] != NULL)
-					number = convert_if_int(tab[1], line_number);
-				instructions[i].f(&stack, number);
-				break;
-			}
-		}
-		if (instructions[i].opcode == NULL)
+		stack = tokenize(stack, instructions, line_number, line);
+		if (stack == NULL)
 		{
 			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
 			exit(EXIT_FAILURE);
 		}
-		free_tab(tab);
 		line_number++;
 	}
-}
-
-void free_tab(char **tab)
-{
-	int i = 0;
-
-	if (tab == NULL)
-		return;
-	for (i = 0; tab[i] != NULL; i++)
-		free(tab[i]);
-	free(tab);
+	free_stack(&stack);
 }
