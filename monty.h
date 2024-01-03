@@ -38,7 +38,8 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-stack_t *tokenize(stack_t *stack, instruction_t instructions[], int line_number, char *line);
+stack_t *tokenize(stack_t *stack,
+instruction_t instructions[], int line_number, char *line);
 int convert_if_int(char *second_argument, int number);
 void free_stack(stack_t **stack);
 void get_opcode(stack_t *stack, instruction_t instruction[], FILE *file);
