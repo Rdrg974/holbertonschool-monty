@@ -1,6 +1,40 @@
 #include "monty.h"
 
 /**
+ * tokenize - function who tokenize a string
+ * @line: a string of character
+ * @line_number: a number of the line
+ * Return: an array of string of character
+ */
+
+char **tokenize(char *line, int line_number)
+{
+        int i = 0;
+        char *token;
+        char **tab = malloc(1024);
+
+        if (tab == NULL)
+        {
+                fprintf(stderr, "Error: malloc failed\n");
+                exit(EXIT_FAILURE);
+        }
+        token = strtok(line, " \t\n");
+        while (token != NULL)
+        {
+                if (i > 1)
+                {
+                        fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
+                        exit(EXIT_FAILURE);
+                }
+                tab[i] = token;
+                i++;
+                token = strtok(NULL, " \t\n");
+        }
+        free(token);
+        return (tab);
+}
+
+/**
  * get_opcode - get the function corresponding to opcode
  * @stack: stack to fill
  * @instructions: opcode and its function
@@ -11,7 +45,6 @@ void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 {
 	int i = 0, number = 0, line_number = 1;
 	char **tab, line[1024];
-	*stack = NULL;
 
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
