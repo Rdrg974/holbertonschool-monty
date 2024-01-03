@@ -40,6 +40,8 @@ typedef struct instruction_s
 
 char **tokenize(char *line, int line_number);
 int convert_if_int(char *second_argument, int number);
+void free_stack(stack_t **stack);
+void get_opcode(stack_t **stack, instruction_t instruction[], int line_number);
 void push_function(stack_t **stack, unsigned int number);
 void pall_function(stack_t **stack, unsigned int number);
 
