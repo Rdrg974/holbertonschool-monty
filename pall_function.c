@@ -1,14 +1,22 @@
 #include "monty.h"
 
-
+/**
+ * pall_function - prints all the values on the stack
+ * @stack: stack to fill
+ * @number: line number
+ */
 
 void pall_function(stack_t **stack, unsigned int number)
 {
 	(void) number;
+	stack_t *node;
 
-	while (stack != NULL)
+	if (stack == NULL)
+		return;
+	node = *stack;
+	while (node != NULL)
 	{
-		fprintf(stdout, "%d\n", (*stack)->n);
-		*stack = (*stack)->next;
+		fprintf(stdout, "%d\n", node->n);
+		node = node->next;
 	}
 }
