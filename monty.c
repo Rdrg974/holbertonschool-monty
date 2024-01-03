@@ -45,7 +45,8 @@ int main(int argc, char *argv[])
 	char **tab, line[1024];
 	const char *file_from;
 	stack_t **stack = NULL;
-	instruction_t instruction[] = {{"push", push_function}, {NULL, NULL}};
+	instruction_t instruction[] = {{"push", push_function},
+		{"pall", pall_function}, {NULL, NULL}};
 
 	if (argc != 2)
 		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
@@ -58,23 +59,20 @@ int main(int argc, char *argv[])
 	}
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
-		i = 0;
 		tab = tokenize(line, line_number);
-		while (instruction[i].opcode != NULL)
+		for (i = 0; instruction[i].opcode != NULL; i++)
 		{
 			if (strcmp(instruction[i].opcode, tab[0]) == 0)
 			{
 				number = convert_if_int(tab[1], line_number);
-				printf("%d\n", number);
 				instruction[i].f(stack, number);
 				break;
 			}
-			else
-			{
-				fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
-				exit(EXIT_FAILURE);
-			}
-			i++;
+		}
+		if (instruction[i].opcode == NULL)
+		{
+			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
+			exit(EXIT_FAILURE);
 		}
 		line_number++;
 	}
