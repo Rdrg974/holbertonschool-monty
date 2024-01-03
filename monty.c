@@ -1,39 +1,6 @@
 #include "monty.h"
 
 /**
- * tokenize - function who tokenize a string
- * @line: a string of character
- * @line_number: a number of the line
- * Return: an array of string of character
- */
-char **tokenize(char *line, int line_number)
-{
-	int i = 0;
-	char *token;
-	char **tab = malloc(1024);
-
-	if (tab == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-	token = strtok(line, " \t\n");
-	while (token != NULL)
-	{
-		if (i > 1)
-		{
-			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
-			exit(EXIT_FAILURE);
-		}
-		tab[i] = token;
-		i++;
-		token = strtok(NULL, " \t\n");
-	}
-	free(token);
-	return (tab);
-}
-
-/**
  * main - a programm who implement the push and pall opcodes
  * @argc: the number of argument
  * @argv: the arguments
@@ -56,7 +23,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't open file %s\n", file_from);
 		exit(EXIT_FAILURE);
 	}
-	get_opcode(&stack, instructions, file);
+	get_opcode(stack, instructions, file);
 	free_stack(&stack);
 	fclose(file);
 	return (0);
