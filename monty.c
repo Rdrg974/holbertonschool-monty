@@ -64,7 +64,8 @@ int main(int argc, char *argv[])
 		{
 			if (strcmp(instruction[i].opcode, tab[0]) == 0)
 			{
-				number = convert_if_int(tab[1], line_number);
+				if (tab[1] != NULL)
+					number = convert_if_int(tab[1], line_number);
 				instruction[i].f(&stack, number);
 				break;
 			}
