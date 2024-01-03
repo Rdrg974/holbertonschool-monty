@@ -17,7 +17,7 @@ char **tokenize(char *line, int line_number)
 		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	token = strtok(line, " \t");
+	token = strtok(line, " \t\n");
 	while (token != NULL)
 	{
 		if (i > 1)
@@ -27,7 +27,7 @@ char **tokenize(char *line, int line_number)
 		}
 		tab[i] = token;
 		i++;
-		token = strtok(NULL, " \t");
+		token = strtok(NULL, " \t\n");
 	}
 	return (tab);
 }
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 	int i, line_number = 1, number;
 	char **tab, line[1024];
 	const char *file_from;
-	stack_t **stack = NULL;
+	stack_t *stack = NULL;
 	instruction_t instruction[] = {{"push", push_function},
 		{"pall", pall_function}, {NULL, NULL}};
 
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 			if (strcmp(instruction[i].opcode, tab[0]) == 0)
 			{
 				number = convert_if_int(tab[1], line_number);
-				instruction[i].f(stack, number);
+				instruction[i].f(&stack, number);
 				break;
 			}
 		}
