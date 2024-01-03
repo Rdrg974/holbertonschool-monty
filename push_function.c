@@ -49,17 +49,3 @@ void push_function(stack_t **stack, unsigned int number)
 		(*stack)->prev = new_node;
 	(*stack) = new_node;
 }
-
-void free_stack(stack_t **stack)
-{
-	stack_t **tmp = NULL;
-
-	if ((*tmp) == NULL)
-		return;
-	while ((*stack) != NULL)
-	{
-		(*tmp) = (*stack);
-		(*stack) = (*stack)->next;
-		free(tmp);
-	}
-}
