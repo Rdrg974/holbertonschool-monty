@@ -42,10 +42,9 @@ char **tokenize(char *line, int line_number)
 int main(int argc, char *argv[])
 {
 	FILE *file;
-	int line_number = 1;
 	const char *file_from;
 	stack_t *stack = NULL;
-	instruction_t instruction[] = {{"push", push_function},
+	instruction_t instructions[] = {{"push", push_function},
 		{"pall", pall_function}, {NULL, NULL}};
 
 	if (argc != 2)
@@ -57,7 +56,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't open file %s\n", file_from);
 		exit(EXIT_FAILURE);
 	}
-	get_opcode(&stack, instruction, line_number);
+	get_opcode(&stack, instructions, file);
 	free_stack(&stack);
 	fclose(file);
 	return (0);
