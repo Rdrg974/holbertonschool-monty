@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	get_opcode(stack, instructions, file);
-	free_stack(&stack);
 	fclose(file);
 	return (0);
 }

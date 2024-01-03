@@ -9,29 +9,34 @@
 
 char **tokenize(char *line, int line_number)
 {
-        int i = 0;
-        char *token;
-        char **tab = malloc(1024);
+	int i = 0;
+	char *token;
+	char **tab = malloc(sizeof(char *) * 2);
 
-        if (tab == NULL)
-        {
-                fprintf(stderr, "Error: malloc failed\n");
-                exit(EXIT_FAILURE);
-        }
-        token = strtok(line, " \t\n");
-        while (token != NULL)
-        {
-                if (i > 1)
-                {
-                        fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
-                        exit(EXIT_FAILURE);
-                }
-                tab[i] = token;
-                i++;
-                token = strtok(NULL, " \t\n");
-        }
-        free(token);
-        return (tab);
+	if (tab == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+	token = strtok(line, " \t\n");
+	while (token != NULL)
+	{
+		if (i >= 2)
+		{
+			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
+			exit(EXIT_FAILURE);
+		}
+		tab[i] = malloc(strlen(token) + 1);
+		if (tab[i] == NULL)
+		{
+			fprintf(stderr, "Error: malloc failed\n");
+			exit(EXIT_FAILURE);
+		}
+		strcpy(tab[i], token);
+		i++;
+		token = strtok(NULL, " \t\n");
+	}
+	return (tab);
 }
 
 /**
@@ -44,7 +49,7 @@ char **tokenize(char *line, int line_number)
 void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 {
 	int i = 0, number = 0, line_number = 1;
-	char **tab, line[1024];
+	char **tab = NULL, line[1024];
 
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
@@ -64,6 +69,18 @@ void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
 			exit(EXIT_FAILURE);
 		}
+		free_tab(tab);
 		line_number++;
 	}
+}
+
+void free_tab(char **tab)
+{
+	int i = 0;
+
+	if (tab == NULL)
+		return;
+	for (i = 0; tab[i] != NULL; i++)
+		free(tab[i]);
+	free(tab);
 }
