@@ -53,8 +53,8 @@ void push_function(stack_t **stack, unsigned int number)
 }
 
 /**
- * free_stack - free all allocated memory
- * @stack : stack to fill
+ * free_stack - free the stack
+ * @stack: stack containting elements to free
  */
 
 void free_stack(stack_t **stack)
