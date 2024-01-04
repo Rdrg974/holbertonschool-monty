@@ -68,6 +68,7 @@ void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 		if (tmp1 == NULL)
 		{
 			fprintf(stderr, "Error: malloc failed\n");
+			fclose(file);
 			exit(EXIT_FAILURE);
 		}
 		tmp2 = strtok(tmp1, " \t\n");
