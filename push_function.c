@@ -10,11 +10,13 @@
 
 int convert_if_int(char *arg2, int line_number)
 {
-	int number = 0;
+	int number = 1;
 	int i = 0;
 
 	while (arg2[i] != '\0')
 	{
+		if (arg2[i] == '-')
+			i++;
 		if (isdigit(arg2[i]) == 0)
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
@@ -49,6 +51,11 @@ void push_function(stack_t **stack, unsigned int number)
 		(*stack)->prev = new_node;
 	(*stack) = new_node;
 }
+
+/**
+ * free_stack - free all allocated memory
+ * @stack : stack to fill
+ */
 
 void free_stack(stack_t **stack)
 {
