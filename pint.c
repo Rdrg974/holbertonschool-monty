@@ -12,7 +12,10 @@ void pint(stack_t **stack, unsigned int number)
 	stack_t *node;
 
 	if (stack == NULL)
-		return;
+	{
+		fprintf(stderr, "L%d: can't pint, stack empty\n", number);
+		exit(EXIT_FAILURE);
+	}
 	node = *stack;
 	fprintf(stdout, "%d\n", node->n);
 }
