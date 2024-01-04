@@ -10,11 +10,13 @@
 
 int convert_if_int(char *arg2, int line_number)
 {
-	int number = 0;
+	int number = 1;
 	int i = 0;
 
 	while (arg2[i] != '\0')
 	{
+		if (arg2[i] == '-')
+			i++;
 		if (isdigit(arg2[i]) == 0)
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
