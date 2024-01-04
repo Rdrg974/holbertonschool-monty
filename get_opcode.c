@@ -6,16 +6,23 @@
  * @instructions: opcode and its function
  * @line_number: a number of the line
  * @line: a string of character
+ * @file: file
  * Return: stack
  */
 
 stack_t *tokenize(stack_t *stack, instruction_t instructions[],
-		int line_number, char *line)
+		int line_number, char *line, FILE *file)
 {
 	int i = 0, number = 0;
 	char *token, *tmp;
 
 	tmp = strdup(line);
+	if (tmp == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		fclose(file);
+		exit(EXIT_FAILURE);
+	}
 	token = strtok(tmp, " \t\n");
 	while (token != NULL && instructions[i].opcode != NULL)
 	{
@@ -28,9 +35,10 @@ stack_t *tokenize(stack_t *stack, instruction_t instructions[],
 				{
 					free(tmp);
 					fprintf(stderr, "L%d: usage: push integer\n", line_number);
+					fclose(file);
 					exit(EXIT_FAILURE);
 				}
-				number = convert_if_int(token, line_number);
+				number = convert_if_int(token, line_number, file);
 			}
 			instructions[i].f(&stack, number);
 			free(tmp);
@@ -57,6 +65,12 @@ void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
 		tmp1 = strdup(line);
+		if (tmp1 == NULL)
+		{
+			fprintf(stderr, "Error: malloc failed\n");
+			fclose(file);
+			exit(EXIT_FAILURE);
+		}
 		tmp2 = strtok(tmp1, " \t\n");
 		if (tmp2 == NULL)
 		{
@@ -65,10 +79,11 @@ void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 			continue;
 		}
 		free(tmp1);
-		stack = tokenize(stack, instructions, line_number, line);
+		stack = tokenize(stack, instructions, line_number, line, file);
 		if (stack == NULL)
 		{
 			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
+			fclose(file);
 			exit(EXIT_FAILURE);
 		}
 		line_number++;

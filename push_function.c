@@ -4,11 +4,11 @@
  * convert_if_int - convert char to int
  * @arg2: string to convert to int
  * @line_number: line number
- *
+ * @file: file
  * Return: number
  */
 
-int convert_if_int(char *arg2, int line_number)
+int convert_if_int(char *arg2, int line_number, FILE *file)
 {
 	int number = 1;
 	int i = 0;
@@ -20,6 +20,7 @@ int convert_if_int(char *arg2, int line_number)
 		if (isdigit(arg2[i]) == 0)
 		{
 			fprintf(stderr, "L%d: usage: push integer\n", line_number);
+			fclose(file);
 			exit(EXIT_FAILURE);
 		}
 		i++;
