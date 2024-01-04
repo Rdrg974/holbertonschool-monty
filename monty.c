@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	const char *file_from;
 	stack_t *stack = NULL;
 	instruction_t instructions[] = {{"push", push_function},
-		{"pall", pall_function}, {NULL, NULL}};
+		{"pall", pall_function}, {"pint", pint}, {NULL, NULL}};
 
 	if (argc != 2)
 		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);

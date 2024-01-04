@@ -45,5 +45,6 @@ void free_stack(stack_t **stack);
 void get_opcode(stack_t *stack, instruction_t instruction[], FILE *file);
 void push_function(stack_t **stack, unsigned int number);
 void pall_function(stack_t **stack, unsigned int number);
+void pint(stack_t **stack, unsigned int number);
 
 #endif
