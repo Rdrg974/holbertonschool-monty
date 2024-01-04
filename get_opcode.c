@@ -24,6 +24,12 @@ stack_t *tokenize(stack_t *stack, instruction_t instructions[],
 			if (strcmp(token, "push") == 0)
 			{
 				token = strtok(NULL, " \t\n");
+				if (token == NULL)
+				{
+					free(tmp);
+					fprintf(stderr, "L%d: usage: push integer\n", line_number);
+					exit(EXIT_FAILURE);
+				}
 				number = convert_if_int(token, line_number);
 			}
 			instructions[i].f(&stack, number);
