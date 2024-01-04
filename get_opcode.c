@@ -52,10 +52,19 @@ stack_t *tokenize(stack_t *stack, instruction_t instructions[],
 void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 {
 	int line_number = 1;
-	char line[1024];
+	char line[1024], *tmp1, *tmp2;
 
 	while (fgets(line, sizeof(line), file) != NULL)
 	{
+		tmp1 = strdup(line);
+		tmp2 = strtok(tmp1, " \t\n");
+		if (tmp2 == NULL)
+		{
+			free(tmp1);
+			line_number++;
+			continue;
+		}
+		free(tmp1);
 		stack = tokenize(stack, instructions, line_number, line);
 		if (stack == NULL)
 		{
