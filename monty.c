@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
 		{"pint", pint},
 		{"pop", pop},
 		{"nop", nop},
+		{"swap", swap},
 		{NULL, NULL}};
 
 	if (argc != 2)
