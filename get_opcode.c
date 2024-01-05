@@ -7,10 +7,9 @@
  * @line_number: a number of the line
  * @line: a string of character
  * @file: file
- * Return: stack
  */
 
-stack_t *tokenize(stack_t *stack, instruction_t instructions[],
+void tokenize(stack_t **stack, instruction_t instructions[],
 		int line_number, char *line, FILE *file)
 {
 	int i = 0, number = 0;
@@ -33,21 +32,24 @@ stack_t *tokenize(stack_t *stack, instruction_t instructions[],
 				token = strtok(NULL, " \t\n");
 				if (token == NULL)
 				{
-					free(tmp);
+					free(tmp), free_stack(*stack);
 					fprintf(stderr, "L%d: usage: push integer\n", line_number);
-					fclose(file);
-					exit(EXIT_FAILURE);
+					fclose(file), exit(EXIT_FAILURE);
 				}
-				number = convert_if_int(token, line_number, file);
+				number = convert_if_int(stack, tmp, token, line_number, file);
 			}
-			instructions[i].f(&stack, number);
-			free(tmp);
-			return (stack);
+			instructions[i].f(stack, number);
+			break;
 		}
 		i++;
 	}
+	if (instructions[i].opcode == NULL)
+	{
+		free(tmp), free_stack(*stack);
+		fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
+		fclose(file), exit(EXIT_FAILURE);
+	}
 	free(tmp);
-	return (NULL);
 }
 
 /**
@@ -57,7 +59,7 @@ stack_t *tokenize(stack_t *stack, instruction_t instructions[],
  * @file: file to read
  */
 
-void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
+void get_opcode(stack_t **stack, instruction_t instructions[], FILE *file)
 {
 	int line_number = 1;
 	char line[1024], *tmp1, *tmp2;
@@ -79,14 +81,7 @@ void get_opcode(stack_t *stack, instruction_t instructions[], FILE *file)
 			continue;
 		}
 		free(tmp1);
-		stack = tokenize(stack, instructions, line_number, line, file);
-		if (stack == NULL)
-		{
-			fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
-			fclose(file);
-			exit(EXIT_FAILURE);
-		}
+		tokenize(stack, instructions, line_number, line, file);
 		line_number++;
 	}
-	free_stack(&stack);
 }

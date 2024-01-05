@@ -11,7 +11,7 @@ void pall_function(stack_t **stack, unsigned int number)
 	(void) number;
 	stack_t *node;
 
-	if (stack == NULL)
+	if (*stack == NULL)
 		return;
 	node = *stack;
 	while (node != NULL)
