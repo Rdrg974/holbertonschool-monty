@@ -12,11 +12,12 @@ int main(int argc, char *argv[])
 	const char *file_from;
 	stack_t *stack = NULL;
 	instruction_t instructions[] = {
-	{"push", push},
-	{"pall", pall},
-	{"pint", pint},
-	{"pop", pop},
-	{NULL, NULL}};
+		{"push", push},
+		{"pall", pall},
+		{"pint", pint},
+		{"pop", pop},
+		{"nop", nop},
+		{NULL, NULL}};
 
 	if (argc != 2)
 		fprintf(stderr, "USAGE: monty file\n"), exit(EXIT_FAILURE);
