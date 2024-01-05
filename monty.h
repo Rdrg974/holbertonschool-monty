@@ -48,6 +48,7 @@ typedef struct instruction_s
 typedef struct fclose_s
 {
 	FILE *file;
+	char *tmp;
 } fclose_t;
 
 extern fclose_t _close;

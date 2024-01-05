@@ -23,6 +23,7 @@ void tokenize(stack_t **stack, instruction_t instructions[],
 		exit(EXIT_FAILURE);
 	}
 	token = strtok(tmp, " \t\n");
+	_close.tmp = tmp;
 	while (token != NULL && instructions[i].opcode != NULL)
 	{
 		if (strcmp(instructions[i].opcode, token) == 0)
@@ -72,6 +73,7 @@ void get_opcode(stack_t **stack, instruction_t instructions[], FILE *file)
 		if (tmp1 == NULL)
 		{
 			fprintf(stderr, "Error: malloc failed\n");
+			free_stack(*stack);
 			fclose(file);
 			exit(EXIT_FAILURE);
 		}
