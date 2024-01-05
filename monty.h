@@ -38,6 +38,19 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * struct fclose_s
+ * @file: file
+ *
+ * Description: a structure meant to close a file
+ */
+typedef struct fclose_s
+{
+	FILE *file;
+} fclose_t;
+
+extern fclose_t _close;
+
 void tokenize(stack_t **stack, instruction_t instructions[],
 		int line_number, char *line, FILE *file);
 int convert_if_int(stack_t **stack, char *tmp,
