@@ -39,10 +39,11 @@ typedef struct instruction_s
 } instruction_t;
 
 /**
- * struct fclose_s
+ * struct fclose_s - structure to close a file
  * @file: file
  *
- * Description: a structure meant to close a file
+ * Description: a structure meant
+ * to close a file
  */
 typedef struct fclose_s
 {
