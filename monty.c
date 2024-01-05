@@ -1,5 +1,5 @@
 #include "monty.h"
-
+fclose_t _close = {NULL};
 /**
  * main - a programm who implement the push and pall opcodes
  * @argc: the number of argument
@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't open file %s\n", file_from);
 		exit(EXIT_FAILURE);
 	}
+	_close.file = file;
 	get_opcode(&stack, instructions, file);
 	fclose(file);
 	free_stack(stack);
