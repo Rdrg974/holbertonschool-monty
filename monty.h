@@ -38,13 +38,14 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-stack_t *tokenize(stack_t *stack, instruction_t instructions[],
+void tokenize(stack_t **stack, instruction_t instructions[],
 		int line_number, char *line, FILE *file);
-int convert_if_int(char *second_argument, int number, FILE *file);
-void free_stack(stack_t **stack);
-void get_opcode(stack_t *stack, instruction_t instruction[], FILE *file);
-void push_function(stack_t **stack, unsigned int number);
-void pall_function(stack_t **stack, unsigned int number);
+int convert_if_int(stack_t **stack, char *tmp, char *second_argument, int number, FILE *file);
+void free_stack(stack_t *stack);
+void get_opcode(stack_t **stack, instruction_t instruction[], FILE *file);
+void push(stack_t **stack, unsigned int number);
+void pall(stack_t **stack, unsigned int number);
 void pint(stack_t **stack, unsigned int number);
+void pop(stack_t **stack, unsigned int number);
 
 #endif
