@@ -3,17 +3,17 @@
 /**
  * pint - print element at the top of the stack
  * @stack: stack containing elements
- * @number: number of line
+ * @line_number: number of line
  */
 
-void pint(stack_t **stack, unsigned int number)
+void pint(stack_t **stack, unsigned int line_number)
 {
-	(void) number;
 	stack_t *node;
 
-	if (stack == NULL)
+	if (*stack == NULL)
 	{
-		fprintf(stderr, "L%d: can't pint, stack empty\n", number);
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
+		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
 	node = *stack;

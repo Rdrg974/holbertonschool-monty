@@ -3,17 +3,17 @@
 /**
  * pop - remove element top of the stack
  * @stack: stack containing elements
- * @number: number of lines
+ * @line_number: number of lines
  */
 
-void pop(stack_t **stack, unsigned int number)
+void pop(stack_t **stack, unsigned int line_number)
 {
-	(void) number;
 	stack_t *current = *stack;
 
 	if (stack == NULL)
 	{
-		fprintf(stderr, "L%d: can't pop an empty stack\n", number);
+		fprintf(stderr, "L%d: can't pop an empty stack\n", line_number);
+		free_stack(*stack);
 		exit(EXIT_FAILURE);
 	}
 	*stack = current->next;

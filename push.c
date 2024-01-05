@@ -2,6 +2,8 @@
 
 /**
  * convert_if_int - convert char to int
+ * @stack: stack to fill
+ * @tmp: variable tmp
  * @arg2: string to convert to int
  * @line_number: line number
  * @file: file contains commands
@@ -11,8 +13,7 @@
 int convert_if_int(stack_t **stack, char *tmp,
 		char *arg2, int line_number, FILE *file)
 {
-	int number = 1;
-	int i = 0;
+	int i = 0, number = 0;
 
 	while (arg2[i] != '\0')
 	{
@@ -31,12 +32,12 @@ int convert_if_int(stack_t **stack, char *tmp,
 }
 
 /**
- * push_function - add elements to stack
+ * push - add elements to stack
  * @stack: stack to fill
- * @number: line number
+ * @number: argument of push
  */
 
-void push_function(stack_t **stack, unsigned int number)
+void push(stack_t **stack, unsigned int number)
 {
 	stack_t *new_node = malloc(sizeof(stack_t) * 1);
 

@@ -37,8 +37,10 @@ void tokenize(stack_t **stack, instruction_t instructions[],
 					fclose(file), exit(EXIT_FAILURE);
 				}
 				number = convert_if_int(stack, tmp, token, line_number, file);
+				instructions[i].f(stack, number);
 			}
-			instructions[i].f(stack, number);
+			else
+				instructions[i].f(stack, line_number);
 			break;
 		}
 		i++;
