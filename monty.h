@@ -49,5 +49,6 @@ void pall(stack_t **stack, unsigned int number);
 void pint(stack_t **stack, unsigned int number);
 void pop(stack_t **stack, unsigned int number);
 void nop(stack_t **stack, unsigned int number);
+void swap(stack_t **stack, unsigned int number);
 
 #endif
