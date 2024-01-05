@@ -1,14 +1,14 @@
 #include "monty.h"
 
 /**
- * pall_function - prints all the values on the stack
+ * pall- prints all the values on the stack
  * @stack: stack to fill
- * @number: line number
+ * @line_number: line number
  */
 
-void pall_function(stack_t **stack, unsigned int number)
+void pall(stack_t **stack, unsigned int line_number)
 {
-	(void) number;
+	(void) line_number;
 	stack_t *node;
 
 	if (*stack == NULL)
