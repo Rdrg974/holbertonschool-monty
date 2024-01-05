@@ -41,6 +41,7 @@ typedef struct instruction_s
 /**
  * struct fclose_s - structure to close a file
  * @file: file
+ * @tmp: strdup buffer
  *
  * Description: a structure meant
  * to close a file

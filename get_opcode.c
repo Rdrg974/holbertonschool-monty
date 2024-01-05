@@ -33,9 +33,8 @@ void tokenize(stack_t **stack, instruction_t instructions[],
 				token = strtok(NULL, " \t\n");
 				if (token == NULL)
 				{
-					free(tmp), free_stack(*stack);
 					fprintf(stderr, "L%d: usage: push integer\n", line_number);
-					fclose(file), exit(EXIT_FAILURE);
+					free(tmp), free_stack(*stack), fclose(file), exit(EXIT_FAILURE);
 				}
 				number = convert_if_int(stack, tmp, token, line_number, file);
 				instructions[i].f(stack, number);
