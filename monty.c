@@ -1,5 +1,5 @@
 #include "monty.h"
-fclose_t _close = {NULL, NULL};
+fclose_t _close = {NULL, NULL, NULL};
 /**
  * main - a programm who implement the push and pall opcodes
  * @argc: the number of argument

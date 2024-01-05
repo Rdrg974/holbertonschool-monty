@@ -24,6 +24,7 @@ void tokenize(stack_t **stack, instruction_t instructions[],
 	}
 	token = strtok(tmp, " \t\n");
 	_close.tmp = tmp;
+	_close.opcode = token;
 	while (token != NULL && instructions[i].opcode != NULL)
 	{
 		if (strcmp(instructions[i].opcode, token) == 0)
@@ -47,9 +48,8 @@ void tokenize(stack_t **stack, instruction_t instructions[],
 	}
 	if (instructions[i].opcode == NULL)
 	{
-		free(tmp), free_stack(*stack);
-		fprintf(stderr, "L%d: unknown instruction <opcode>\n", line_number);
-		fclose(file), exit(EXIT_FAILURE);
+		fprintf(stderr, "L%d: unknown instruction %s\n", line_number, _close.opcode);
+		free(tmp), free_stack(*stack), fclose(file), exit(EXIT_FAILURE);
 	}
 	free(tmp);
 }
