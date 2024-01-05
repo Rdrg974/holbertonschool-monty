@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Error: Can't open file %s\n", file_from);
 		exit(EXIT_FAILURE);
 	}
-	get_opcode(stack, instructions, file);
+	get_opcode(&stack, instructions, file);
 	fclose(file);
+	free_stack(stack);
 	return (0);
 }
