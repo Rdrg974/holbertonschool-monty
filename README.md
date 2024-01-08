@@ -8,7 +8,6 @@
 -   [Compilation command](#Compilation-command)
 -   [Mandatory Tasks](#Mandatory-tasks)
 -   [Flowchart](#Flowchart)
--   [MAN page](#MAN-page)
 -   [Installation](#Installation)
 -   [Thanks](#Thanks)
 -   [Authors](#Authors)
@@ -208,13 +207,11 @@ The opcode `nop`` doesn’t do anything.
 
   * Usage: `nop`
 
-## Man page
-
 ## Installation
 
 ### Install and run:
 
-To install and run <name of program>, follow these steps:
+To install and run monty, follow these steps:
 
 Clone the repository using the following command:
 `
@@ -225,21 +222,19 @@ Navigate to the directory where the repository was cloned.
 
 Compile the program by running the following command:
 `
-
+gcc -Wall -Werror -Wextra -pedantic *.c -o monty
 `
 
 Run the program by typing the following command:
 `
-
+./monty <bytecodes file_name>
 `
 
-### Using the <name of program> 
+### Using the monty program 
 
-To use our <name of program>, type a command and press Enter.
+To use our monty, you need a monty file.
 
-The program will execute the command and display the output on the screen.
-
-Here are some examples of commands that you can run:
+The program will read the file line by line and execute the command and print the output on the screen.
 
 ## Thanks
 
